@@ -18,3 +18,7 @@ variable "cidr_block" {
 variable "subnet_cidr_block" {
   type = string
 }
+
+variable "volume_size" {
+  type = number
+}
