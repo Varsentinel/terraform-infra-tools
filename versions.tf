@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.region
+}
+
 terraform {
   backend "remote" {
     organization = "Varsentinel"
@@ -9,8 +13,4 @@ terraform {
       version = "~>6.30"
     }
   }
-}
-
-provider "aws" {
-  region = var.region
 }
