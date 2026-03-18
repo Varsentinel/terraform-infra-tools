@@ -9,7 +9,7 @@ module "ec2-delegate" {
   vpc_name          = var.vpc_name
   name              = var.instance_name
   tags = {
-    Name = var.instance_name
+    Name     = var.instance_name
     AutoStop = "True"
   }
 }
@@ -17,6 +17,6 @@ module "ec2-delegate" {
 module "lambda-ec2-stop" {
   source        = "./modules/ec2-instance-stop"
   function_name = var.function_name
-  region = var.region
-  account_id = data.aws_caller_identity.current.account_id
+  region        = var.region
+  account_id    = data.aws_caller_identity.current.account_id
 }

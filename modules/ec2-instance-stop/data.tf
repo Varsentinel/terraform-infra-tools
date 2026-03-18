@@ -1,5 +1,19 @@
-# IAM role for Lambda execution
+# IAM assume role policy for Lambda
 data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+# IAM permissions policy for Lambda
+data "aws_iam_policy_document" "lambda_permissions" {
   statement {
     sid    = "AllowLambdaToStopEC2"
     effect = "Allow"
@@ -8,6 +22,8 @@ data "aws_iam_policy_document" "assume_role" {
       "ec2:StopInstances",
       "ec2:DescribeInstances"
     ]
+
+    resources = ["*"]
   }
 
   statement {
@@ -18,6 +34,8 @@ data "aws_iam_policy_document" "assume_role" {
       "kms:Decrypt",
       "kms:DescribeKey"
     ]
+
+    resources = ["*"]
   }
 
   statement {
@@ -29,8 +47,9 @@ data "aws_iam_policy_document" "assume_role" {
       "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
+
     resources = [
-      "arn:aws:logs:${var.region}:${var.account_id}:log-group/aws/lambda/ops/${var.function_name}"
+      "arn:aws:logs:${var.region}:${var.account_id}:log-group:/aws/lambda/${var.function_name}*"
     ]
   }
 }

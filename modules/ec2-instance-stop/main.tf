@@ -1,6 +1,6 @@
 # Lambda function
 resource "aws_cloudwatch_log_group" "cw_log_group" {
-  name = "/aws/lambda/ops/${var.function_name}"
+  name              = "/aws/lambda/ops/${var.function_name}"
   retention_in_days = 7
 }
 
@@ -30,7 +30,7 @@ resource "aws_lambda_function" "ec2-stop" {
     ManagedBy   = "Terraform"
   }
   logging_config {
-    log_group = aws_cloudwatch_log_group.cw_log_group.name
+    log_group             = aws_cloudwatch_log_group.cw_log_group.name
     log_format            = "JSON"
     application_log_level = "INFO"
     system_log_level      = "WARN"
@@ -53,6 +53,6 @@ resource "aws_lambda_permission" "ec2-stop" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ec2-stop.function_name
-  principal     = "events.amazon.aws"
+  principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.ec2-stop.arn
 }
