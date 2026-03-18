@@ -22,3 +22,7 @@ variable "subnet_cidr_block" {
 variable "volume_size" {
   type = number
 }
+
+variable "function_name" {
+  type = string
+}
